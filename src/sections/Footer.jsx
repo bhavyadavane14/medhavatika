@@ -1,4 +1,5 @@
 import { MapPin, Phone, Mail } from 'lucide-react';
+import { Link } from 'react-router-dom';
 
 // Social media SVG icons (lucide-react doesn't include social icons)
 const FacebookIcon = () => (
@@ -34,11 +35,10 @@ const LinkedinIcon = () => (
 
 const footerLinks = {
   explore: [
-    { label: 'MedhaLab', href: '#medhalab' },
-    { label: 'BrainSetu Program', href: '#brainsetu' },
-    { label: 'Language Lab', href: '#language-lab' },
-    { label: 'MedhaGames', href: '#medhagames' },
-    { label: 'About Us', href: '#about' },
+    { label: 'MedhaLab', href: '/medhalab' },
+    { label: 'Language Lab', href: '/language-lab' },
+    { label: 'MedhaGames', href: '/medhagames' },
+    { label: 'About Us', href: '/about' },
   ],
   quickLinks: [
     { label: 'Login', href: '#login' },
@@ -77,7 +77,9 @@ export default function Footer() {
         <div className="grid grid-cols-2 md:grid-cols-4 gap-8 lg:gap-12">
           {/* Column 1: Brand */}
           <div className="col-span-2 md:col-span-1">
-            <img src="/logo.png" alt="MedhāVatika" className="h-14 w-auto mb-4 brightness-0 invert" />
+            <Link to="/" className="inline-block">
+              <img src="/logo.png" alt="MedhāVatika" className="h-14 w-auto mb-4 brightness-0 invert" />
+            </Link>
             <p className="text-gray-400 text-sm leading-relaxed mb-5">
               "Where Curiosity Meets Creativity."
               <br /><br />
@@ -107,13 +109,12 @@ export default function Footer() {
             <ul className="space-y-3">
               {footerLinks.explore.map((link) => (
                 <li key={link.label}>
-                  <a
-                    href={link.href}
-                    onClick={(e) => { e.preventDefault(); handleNavClick(link.href); }}
+                  <Link
+                    to={link.href}
                     className="text-gray-400 hover:text-white text-sm transition-colors hover:pl-1 duration-200 block"
                   >
                     {link.label}
-                  </a>
+                  </Link>
                 </li>
               ))}
             </ul>

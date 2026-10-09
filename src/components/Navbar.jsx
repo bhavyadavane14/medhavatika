@@ -1,20 +1,21 @@
 import { useState, useEffect } from 'react';
-import { Menu, X, ChevronDown } from 'lucide-react';
+import { Menu, X } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
+import { Link, useLocation } from 'react-router-dom';
 
 const navLinks = [
-  { label: 'Home', href: '#home' },
-  { label: 'MedhaLab', href: '#medhalab' },
-  { label: 'Language Lab', href: '#language-lab' },
-  { label: 'MedhaGames', href: '#medhagames' },
-  { label: 'BrainSetu', href: '#brainsetu' },
-  { label: 'About', href: '#about' },
-  { label: 'Contact', href: '#contact' },
+  { label: 'Home', path: '/' },
+  { label: 'MedhaLab', path: '/medhalab' },
+  { label: 'Language Lab', path: '/language-lab' },
+  { label: 'MedhaGames', path: '/medhagames' },
+  { label: 'About', path: '/about' },
+  { label: 'Contact', path: '/contact' },
 ];
 
 export default function Navbar() {
   const [isScrolled, setIsScrolled] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
+  const location = useLocation();
 
   useEffect(() => {
     const handleScroll = () => setIsScrolled(window.scrollY > 20);
@@ -22,10 +23,14 @@ export default function Navbar() {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
-  const handleNavClick = (href) => {
+  // Close mobile drawer on route change
+  useEffect(() => {
     setMobileOpen(false);
-    const el = document.querySelector(href);
-    if (el) el.scrollIntoView({ behavior: 'smooth' });
+  }, [location.pathname]);
+
+  const isActive = (path) => {
+    if (path === '/') return location.pathname === '/';
+    return location.pathname.startsWith(path);
   };
 
   return (
@@ -36,55 +41,53 @@ export default function Navbar() {
         transition={{ duration: 0.4, ease: 'easeOut' }}
         className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
           isScrolled
-            ? 'glass shadow-soft py-2'
-            : 'bg-transparent py-4'
+            ? 'glass shadow-soft py-2 bg-white/90 backdrop-blur-md'
+            : 'bg-white/80 backdrop-blur-sm py-4 shadow-xs'
         }`}
       >
         <div className="section-container">
           <div className="flex items-center justify-between">
             {/* Logo */}
-            <a
-              href="#home"
-              onClick={(e) => { e.preventDefault(); handleNavClick('#home'); }}
+            <Link
+              to="/"
               className="flex items-center gap-2 flex-shrink-0"
               aria-label="MedhāVatika - Home"
             >
               <img
                 src="/logo.png"
                 alt="MedhāVatika Logo"
-                className="h-12 md:h-16 w-auto"
+                className="h-12 md:h-16 w-auto object-contain transition-transform hover:scale-105"
               />
-            </a>
+            </Link>
 
             {/* Desktop Nav */}
             <nav className="hidden lg:flex items-center gap-1" aria-label="Main navigation">
-              {navLinks.map((link) => (
-                <a
-                  key={link.label}
-                  href={link.href}
-                  onClick={(e) => { e.preventDefault(); handleNavClick(link.href); }}
-                  className="px-4 py-2 rounded-full text-sm font-semibold text-gray-700 hover:text-brand-blue hover:bg-blue-50 transition-all duration-200"
-                >
-                  {link.label}
-                </a>
-              ))}
+              {navLinks.map((link) => {
+                const active = isActive(link.path);
+                return (
+                  <Link
+                    key={link.label}
+                    to={link.path}
+                    className={`px-4 py-2 rounded-full text-sm font-semibold transition-all duration-200 ${
+                      active
+                        ? 'text-brand-blue bg-blue-50 font-bold shadow-xs'
+                        : 'text-gray-700 hover:text-brand-blue hover:bg-blue-50/60'
+                    }`}
+                  >
+                    {link.label}
+                  </Link>
+                );
+              })}
             </nav>
 
             {/* Desktop CTA */}
             <div className="hidden lg:flex items-center gap-3">
-              <a
-                href="#login"
-                className="text-sm font-semibold text-gray-700 hover:text-brand-blue transition-colors px-4 py-2 rounded-full hover:bg-gray-100"
-              >
-                Login
-              </a>
-              <a
-                href="#demo"
-                onClick={(e) => { e.preventDefault(); handleNavClick('#demo'); }}
-                className="btn-primary text-sm"
+              <Link
+                to="/contact"
+                className="btn-primary text-sm shadow-sm hover:shadow-md"
               >
                 Book a Free Demo
-              </a>
+              </Link>
             </div>
 
             {/* Mobile hamburger */}
@@ -123,7 +126,9 @@ export default function Navbar() {
             >
               <div className="flex flex-col h-full">
                 <div className="flex items-center justify-between p-5 border-b">
-                  <img src="/logo.png" alt="MedhāVatika" className="h-11 w-auto" />
+                  <Link to="/" onClick={() => setMobileOpen(false)}>
+                    <img src="/logo.png" alt="MedhāVatika" className="h-11 w-auto" />
+                  </Link>
                   <button
                     onClick={() => setMobileOpen(false)}
                     className="p-2 rounded-xl text-gray-700 hover:bg-gray-100"
@@ -133,30 +138,34 @@ export default function Navbar() {
                   </button>
                 </div>
 
-                <nav className="flex-1 overflow-y-auto p-5 space-y-1" aria-label="Mobile navigation">
-                  {navLinks.map((link) => (
-                    <a
-                      key={link.label}
-                      href={link.href}
-                      onClick={(e) => { e.preventDefault(); handleNavClick(link.href); }}
-                      className="flex items-center px-4 py-3 rounded-xl text-gray-700 font-semibold hover:bg-blue-50 hover:text-brand-blue transition-all duration-200"
-                    >
-                      {link.label}
-                    </a>
-                  ))}
+                <nav className="flex-1 overflow-y-auto p-5 space-y-1.5" aria-label="Mobile navigation">
+                  {navLinks.map((link) => {
+                    const active = isActive(link.path);
+                    return (
+                      <Link
+                        key={link.label}
+                        to={link.path}
+                        onClick={() => setMobileOpen(false)}
+                        className={`flex items-center px-4 py-3 rounded-xl font-semibold transition-all duration-200 ${
+                          active
+                            ? 'bg-blue-50 text-brand-blue font-bold'
+                            : 'text-gray-700 hover:bg-gray-50 hover:text-brand-blue'
+                        }`}
+                      >
+                        {link.label}
+                      </Link>
+                    );
+                  })}
                 </nav>
 
                 <div className="p-5 space-y-3 border-t bg-gray-50">
-                  <a href="#login" className="block w-full text-center py-3 px-4 rounded-full border-2 border-brand-blue text-brand-blue font-semibold hover:bg-blue-50 transition-colors">
-                    Login
-                  </a>
-                  <a
-                    href="#demo"
-                    onClick={(e) => { e.preventDefault(); setMobileOpen(false); document.querySelector('#demo')?.scrollIntoView({ behavior: 'smooth' }); }}
-                    className="block w-full text-center py-3 px-4 rounded-full bg-brand-blue text-white font-semibold hover:bg-brand-blue-dark transition-colors"
+                  <Link
+                    to="/contact"
+                    onClick={() => setMobileOpen(false)}
+                    className="block w-full text-center py-3 px-4 rounded-full bg-brand-blue text-white font-semibold hover:bg-brand-blue-dark transition-colors shadow-sm"
                   >
                     Book a Free Demo
-                  </a>
+                  </Link>
                 </div>
               </div>
             </motion.div>

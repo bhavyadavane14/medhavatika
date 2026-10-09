@@ -1,26 +1,21 @@
 import { useEffect } from 'react';
+import { Routes, Route, Navigate } from 'react-router-dom';
 import Navbar from './components/Navbar';
-import Hero from './sections/Hero';
-import TrustStrip from './sections/TrustStrip';
-import MedhaLab from './sections/MedhaLab';
-import LearningExperience from './sections/LearningExperience';
-import HowItWorks from './sections/HowItWorks';
-import LanguageLab from './sections/LanguageLab';
-import MedhaGames from './sections/MedhaGames';
-import WhyMedhavatika from './sections/WhyMedhavatika';
-import BrainSetuProgram from './sections/BrainSetuProgram';
-import Statistics from './sections/Statistics';
-import Testimonials from './sections/Testimonials';
-import DemoForm from './sections/DemoForm';
-import SchoolCTA from './sections/SchoolCTA';
-import Pricing from './sections/Pricing';
 import Footer from './sections/Footer';
+import ScrollToTop from './components/ScrollToTop';
+
+import HomePage from './pages/HomePage';
+import MedhaLabPage from './pages/MedhaLabPage';
+import LanguageLabPage from './pages/LanguageLabPage';
+import MedhaGamesPage from './pages/MedhaGamesPage';
+import AboutPage from './pages/AboutPage';
+import ContactPage from './pages/ContactPage';
 
 function ScrollToTopButton() {
   return (
     <button
       onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
-      className="fixed bottom-6 right-6 w-12 h-12 bg-brand-blue text-white rounded-full shadow-lg flex items-center justify-center hover:bg-brand-blue-dark hover:-translate-y-1 transition-all duration-200 z-40"
+      className="fixed bottom-6 right-6 w-12 h-12 bg-brand-blue text-white rounded-full shadow-lg flex items-center justify-center hover:bg-brand-blue-dark hover:-translate-y-1 transition-all duration-200 z-40 cursor-pointer"
       aria-label="Scroll to top"
     >
       ↑
@@ -35,23 +30,19 @@ export default function App() {
   }, []);
 
   return (
-    <div className="min-h-screen overflow-x-hidden">
+    <div className="min-h-screen overflow-x-hidden flex flex-col justify-between">
+      <ScrollToTop />
       <Navbar />
-      <main>
-        <Hero />
-        <TrustStrip />
-        <MedhaLab />
-        <LearningExperience />
-        <HowItWorks />
-        <LanguageLab />
-        <MedhaGames />
-        <WhyMedhavatika />
-        <BrainSetuProgram />
-        <Statistics />
-        <Testimonials />
-        <DemoForm />
-        <SchoolCTA />
-        <Pricing />
+      <main className="flex-grow">
+        <Routes>
+          <Route path="/" element={<HomePage />} />
+          <Route path="/medhalab" element={<MedhaLabPage />} />
+          <Route path="/language-lab" element={<LanguageLabPage />} />
+          <Route path="/medhagames" element={<MedhaGamesPage />} />
+          <Route path="/about" element={<AboutPage />} />
+          <Route path="/contact" element={<ContactPage />} />
+          <Route path="*" element={<Navigate to="/" replace />} />
+        </Routes>
       </main>
       <Footer />
       <ScrollToTopButton />

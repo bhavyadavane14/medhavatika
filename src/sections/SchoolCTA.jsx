@@ -1,5 +1,6 @@
 import { motion } from 'framer-motion';
 import { Building2, Phone, ArrowRight } from 'lucide-react';
+import { Link } from 'react-router-dom';
 
 export default function SchoolCTA() {
   return (
@@ -59,24 +60,22 @@ export default function SchoolCTA() {
             </div>
 
             <div className="flex flex-wrap gap-4">
-              <a
-                href="#contact"
-                onClick={(e) => { e.preventDefault(); document.querySelector('#contact')?.scrollIntoView({ behavior: 'smooth' }); }}
+              <Link
+                to="/contact"
                 className="bg-white text-brand-blue font-bold px-6 py-3.5 rounded-full hover:bg-blue-50 transition-colors flex items-center gap-2 shadow-lg"
                 id="school-partner-cta"
               >
                 <Building2 size={18} />
                 Partner With Us
-              </a>
-              <a
-                href="#contact"
-                onClick={(e) => { e.preventDefault(); document.querySelector('#contact')?.scrollIntoView({ behavior: 'smooth' }); }}
+              </Link>
+              <Link
+                to="/contact"
                 className="border-2 border-white/50 text-white font-bold px-6 py-3.5 rounded-full hover:bg-white/10 transition-colors flex items-center gap-2"
                 id="school-contact-cta"
               >
                 <Phone size={18} />
                 Contact Our Team
-              </a>
+              </Link>
             </div>
           </motion.div>
 

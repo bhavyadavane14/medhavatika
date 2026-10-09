@@ -1,5 +1,6 @@
 import { motion } from 'framer-motion';
 import { ArrowRight, Play, Star, BookOpen, Atom, Calculator, Globe } from 'lucide-react';
+import { Link } from 'react-router-dom';
 
 const floatingElements = [
   { icon: '⚛️', size: 'text-3xl', position: 'top-12 left-10', delay: 0, className: 'float-element' },
@@ -105,24 +106,22 @@ export default function Hero() {
               transition={{ duration: 0.5, delay: 0.4 }}
               className="flex flex-wrap gap-3 mb-8"
             >
-              <a
-                href="#medhalab"
-                onClick={(e) => { e.preventDefault(); document.querySelector('#medhalab')?.scrollIntoView({ behavior: 'smooth' }); }}
+              <Link
+                to="/medhalab"
                 className="btn-primary text-base px-8 py-4"
                 id="hero-start-learning"
               >
                 Start Learning
                 <ArrowRight size={18} />
-              </a>
-              <a
-                href="#demo"
-                onClick={(e) => { e.preventDefault(); document.querySelector('#demo')?.scrollIntoView({ behavior: 'smooth' }); }}
+              </Link>
+              <Link
+                to="/contact"
                 className="btn-secondary text-base px-8 py-4"
                 id="hero-book-demo"
               >
                 <Play size={16} className="fill-brand-blue" />
                 Book a Free Demo
-              </a>
+              </Link>
             </motion.div>
 
             {/* Pricing hint */}
