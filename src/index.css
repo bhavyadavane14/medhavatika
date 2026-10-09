@@ -1,0 +1,189 @@
+@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,400&family=Poppins:wght@300;400;500;600;700;800&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  * {
+    box-sizing: border-box;
+  }
+  
+  html {
+    scroll-behavior: smooth;
+  }
+  
+  body {
+    font-family: 'Plus Jakarta Sans', 'Poppins', sans-serif;
+    color: #1a2341;
+    background-color: #ffffff;
+    overflow-x: hidden;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+    }
+  }
+}
+
+@layer components {
+  .btn-primary {
+    @apply bg-brand-blue text-white font-semibold px-6 py-3 rounded-full 
+    hover:bg-brand-blue-dark transition-all duration-200 
+    shadow-md hover:shadow-lg hover:-translate-y-0.5 
+    focus:outline-none focus:ring-2 focus:ring-brand-blue focus:ring-offset-2
+    inline-flex items-center gap-2 text-sm;
+  }
+
+  .btn-secondary {
+    @apply bg-white text-brand-blue font-semibold px-6 py-3 rounded-full 
+    border-2 border-brand-blue hover:bg-blue-50 transition-all duration-200
+    focus:outline-none focus:ring-2 focus:ring-brand-blue focus:ring-offset-2
+    inline-flex items-center gap-2 text-sm;
+  }
+
+  .btn-ghost {
+    @apply text-brand-blue font-semibold px-4 py-2 rounded-full 
+    hover:bg-blue-50 transition-all duration-200
+    focus:outline-none focus:ring-2 focus:ring-brand-blue
+    inline-flex items-center gap-1 text-sm;
+  }
+
+  .section-heading {
+    @apply text-3xl md:text-4xl lg:text-5xl font-bold text-gray-900 leading-tight;
+  }
+
+  .section-subheading {
+    @apply text-lg md:text-xl text-gray-600 leading-relaxed;
+  }
+
+  .card {
+    @apply bg-white rounded-3xl shadow-card border border-gray-100 
+    hover:shadow-hover hover:-translate-y-1 transition-all duration-300;
+  }
+
+  .tag {
+    @apply inline-flex items-center gap-1 text-xs font-semibold px-3 py-1 
+    rounded-full uppercase tracking-wider;
+  }
+
+  .section-container {
+    @apply max-w-7xl mx-auto px-4 sm:px-6 lg:px-8;
+  }
+
+  .gradient-text {
+    @apply bg-clip-text text-transparent bg-gradient-to-r from-brand-blue to-brand-green;
+  }
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+  width: 6px;
+}
+::-webkit-scrollbar-track {
+  background: #f1f5f9;
+}
+::-webkit-scrollbar-thumb {
+  background: #1a56a8;
+  border-radius: 10px;
+}
+
+/* Floating animations */
+@keyframes floatY {
+  0%, 100% { transform: translateY(0px) rotate(0deg); }
+  50% { transform: translateY(-15px) rotate(3deg); }
+}
+
+@keyframes floatYSlow {
+  0%, 100% { transform: translateY(0px); }
+  50% { transform: translateY(-20px); }
+}
+
+@keyframes spinSlow {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+@keyframes pulseBounce {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.05); }
+}
+
+.float-element {
+  animation: floatY 6s ease-in-out infinite;
+}
+
+.float-element-slow {
+  animation: floatYSlow 8s ease-in-out infinite;
+}
+
+.float-element-delayed {
+  animation: floatY 6s ease-in-out 2s infinite;
+}
+
+.spin-slow {
+  animation: spinSlow 20s linear infinite;
+}
+
+.pulse-bounce {
+  animation: pulseBounce 3s ease-in-out infinite;
+}
+
+/* Glassmorphism */
+.glass {
+  background: rgba(255, 255, 255, 0.85);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 255, 255, 0.6);
+}
+
+/* Grade selector styles */
+.grade-chip {
+  @apply px-4 py-2 rounded-full text-sm font-semibold cursor-pointer 
+  transition-all duration-200 whitespace-nowrap;
+}
+
+.grade-chip-active {
+  @apply bg-brand-blue text-white shadow-md;
+}
+
+.grade-chip-inactive {
+  @apply bg-white text-gray-600 border border-gray-200 hover:border-brand-blue hover:text-brand-blue;
+}
+
+/* Counter animation */
+.counter-value {
+  font-variant-numeric: tabular-nums;
+}
+
+/* Testimonial carousel */
+.testimonial-card {
+  @apply bg-white rounded-3xl p-6 md:p-8 shadow-card border border-gray-100;
+}
+
+/* Language card hover effect */
+.language-card:hover .language-bg {
+  transform: scale(1.05);
+}
+
+/* Game card */
+.game-card {
+  @apply relative overflow-hidden rounded-2xl cursor-pointer;
+}
+
+.game-card:hover .game-overlay {
+  opacity: 1;
+}
+
+/* Section divider */
+.section-divider {
+  height: 4px;
+  background: linear-gradient(90deg, #1a56a8, #3a8c3f, #f5a623);
+  border-radius: 2px;
+  width: 60px;
+}
